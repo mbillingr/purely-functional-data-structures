@@ -1,3 +1,4 @@
+(import (scheme base))
 
 (define (suffixes l)
   (if (null? l)
