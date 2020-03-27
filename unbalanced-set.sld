@@ -1,0 +1,35 @@
+(define-library (unbalanced-set)
+  (export empty-set make-set set-empty? set-member? set-insert)
+  (import (scheme base)
+          (binary-tree))
+  (begin    
+    (define empty-set empty-tree)
+
+    (define (make-set . items)
+      (let loop ((items items)
+                 (set empty-set))
+        (if (null? items)
+            set
+            (loop (cdr items) (set-insert set (car items))))))
+
+    (define (set-empty? set)
+      (eq? set empty-tree))
+
+    (define (set-member? set x)
+      (cond ((set-empty? set) #f)
+            ((< x (tree-elem set))
+             (set-member? (tree-left set) x))
+            ((eqv? x (tree-elem set)) #t)
+            (else (set-member? (tree-right set) x))))
+
+    (define (set-insert set x)
+      (cond ((set-empty? set)
+             (cons-tree x empty-tree empty-tree))
+            ((< x (tree-elem set))
+             (cons-tree (tree-elem set)
+                        (set-insert (tree-left set) x)
+                        (tree-right set)))
+            ((eqv? x (tree-elem set)) set)
+            (else (cons-tree (tree-elem set)
+                             (tree-left set)
+                             (set-insert (tree-right set) x)))))))
