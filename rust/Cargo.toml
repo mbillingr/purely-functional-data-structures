@@ -1,0 +1,17 @@
+[package]
+name = "purely-functional-datastructures"
+version = "0.1.0"
+authors = ["Martin Billinger <mbillingr@users.noreply.github.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = []
+
+# When using a garbage collector it's possible to simply leak
+# allocations instead of using reference counting.
+leaky = []
+
+[dependencies]
+ref-cast = "1.0"
